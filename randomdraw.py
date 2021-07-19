@@ -57,7 +57,7 @@ class Random:
         df.to_html('table.html')
 
     # ask if you would like to shuffle the list again. If yes, shuffle and ask if you would like to shuffle again.
-    # if no, ask to save the list to .pdf
+    # if no, ask to print the list to and open in browser to print.
     def doagain(self):
         print("Would you like to shuffle again? \n")
         again = input("Y/N " + "(ALL CAPS)? ").upper()
