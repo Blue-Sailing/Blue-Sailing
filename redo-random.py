@@ -1,8 +1,8 @@
-from fpdf import FPDF
 import pandas as pd
+import os
+
 
 class Random:
-
     def __init__(self, itemz):
         self.itemz = itemz
 
@@ -32,6 +32,7 @@ class Random:
                 self.list_shuffle()
                 self.print_shuffle()
                 self.doagain()
+
     # shuffle the original list of items
     def list_shuffle(self):
         import random
@@ -42,6 +43,7 @@ class Random:
                 random.shuffle(rand_itemzs)
             y = y + 1
         return rand_itemzs
+
     # print the original list beside the shuffled list
     def print_shuffle(self):
         table = {}
@@ -50,8 +52,10 @@ class Random:
         index = range(1, count)
         table['Items'] = self.itemz
         table['Shuffled'] = shuff_list
-        df = pd.DataFrame(data=table, index=index, )
-        print (df)
+        df = pd.DataFrame(data=table, index=index)
+        print(df, "\n")
+        df.to_html('table.html')
+
     # ask if you would like to shuffle the list again. If yes, shuffle and ask if you would like to shuffle again.
     # if no, ask to save the list to .pdf
     def doagain(self):
@@ -63,16 +67,12 @@ class Random:
             self.doagain()
         else:
             print('\n')
-            myprint = input("Save your list to .pdf for file/print? Y/N  ").upper()
+            myprint = input("Would you like to print your list? Y/N  ").upper()
             if myprint == 'Y':
-                pdf = FPDF('L', 'in', 'Letter')
-                pdf.add_page()
-                pdf.set_font('Times', '', 16)
-                pdf.write(10)
-                pdf.output('myrandomlist.pdf', 'F').encode('latin-1')
+                import webbrowser
+                filename='table.html'
+                webbrowser.open('file://' + os.path.realpath(filename))
 
-            pass
-
-
-runit = Random('')
-runit.build_list()
+if __name__ == "__main__":
+    runit = Random('')
+    runit.build_list()
